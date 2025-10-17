@@ -1,4 +1,4 @@
-[packages]
+[package]
 name="logutil"
 version="0.0.1"
 description="Logging library for c++"
