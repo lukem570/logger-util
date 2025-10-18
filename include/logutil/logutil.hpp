@@ -72,7 +72,7 @@ namespace Logutil {
         eFatal,
     };
 
-    using LogVariant = std::variant<int, unsigned int, char, std::string, std::wstring, const char*, bool, double>;
+    using LogVariant = std::variant<int, unsigned int, char, std::string, std::wstring, const char*, bool, double, void*>;
 
 
     class __Logutil {

@@ -56,6 +56,8 @@ namespace Logutil {
                 ss << value;
             else if constexpr (std::is_same_v<T, bool>)
                 ss << BLUE << (value ? L"true" : L"false") << WHITE;
+            else if constexpr (std::is_same_v<T, void*>)
+                ss << std::hex << value;
             else if constexpr (std::is_same_v<T, double>) {
                 if (precision)
                     ss << std::fixed << std::setprecision(1) << value;
