@@ -31,7 +31,6 @@ namespace Logutil {
             instance = new __Logutil();
         return instance;
     }
-
     
     std::wstring truncate(const std::wstring& str, size_t width) {
         if (str.length() <= width) {
@@ -108,16 +107,42 @@ namespace Logutil {
         return result;
     }
 
-    void __Logutil::intrisicLog(LogLevel level, fs::path file, int line, std::wstring data, std::initializer_list<LogVariant> args) noexcept {
+    std::wstring getTime() {
 
-        const unsigned int maxFileWidth = 16;
+        time_t time = std::time(nullptr);
+        tm* localTime = std::localtime(&time);
+
+        auto now = clk::system_clock::now();
+
+        auto ms = clk::duration_cast<clk::milliseconds>(now.time_since_epoch()) % 1000;
+
+        std::stringstream output;
+        output << std::put_time(localTime, "%d-%m-%Y %H-%M-%S");
+        output << '.' << std::setw(3) << std::setfill('0') << ms.count();
+        std::string str = output.str();
+
+        return std::wstring(str.begin(), str.end());
+    }
+
+    void __Logutil::intrisicLog(LogLevel level, std::wstring data, std::initializer_list<LogVariant> args, std::source_location location) noexcept {
+
+        const unsigned int maxFileWidth = 32;
+
+        std::wstringstream locationStream;
+        locationStream << location.file_name() << L'(';
+        locationStream << location.line() << L':';
+        locationStream << location.column() << L") ";
+        locationStream << location.function_name();
         
         std::wstringstream output;
+        output << GREEN;
+        output << getTime();
+        output << RESET << " ";
         output << levelColor(level);
         output << std::left << std::setw(8) << L"["+toString(level)+L"]";
         output << RESET << " ";
         output << BLUE;
-        output << std::right << std::setw(maxFileWidth) << truncate(file.wstring() + L":" + std::to_wstring(line), maxFileWidth);
+        output << std::right << std::setw(maxFileWidth) << truncate(locationStream.str(), maxFileWidth);
         output << RESET << " ";
         output << WHITE;
         output << simplify(data, args);

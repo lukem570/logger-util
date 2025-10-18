@@ -7,8 +7,11 @@
 #include <initializer_list>
 #include <filesystem>
 #include <iomanip>
+#include <chrono>
+#include <source_location>
 
 namespace fs = std::filesystem;
+namespace clk = std::chrono;
 
 std::wstring operator "" _wstr(const wchar_t* str, size_t len) {
     std::wstring s(str, len);
@@ -44,18 +47,18 @@ std::wstring operator "" _wstr(const char* str, size_t len) {
 }
 #endif
 
-#define debug(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eDebug, __FILE__, __LINE__, data ## _wstr, {__VA_ARGS__})
-#define info(data, ...)  __Logutil::intrisicLog(Logutil::LogLevel::eInfo,  __FILE__, __LINE__, data ## _wstr, {__VA_ARGS__})
-#define warn(data, ...)  __Logutil::intrisicLog(Logutil::LogLevel::eWarn,  __FILE__, __LINE__, data ## _wstr, {__VA_ARGS__})
-#define error(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eError, __FILE__, __LINE__, data ## _wstr, {__VA_ARGS__})
-#define fatal(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eFatal, __FILE__, __LINE__, data ## _wstr, {__VA_ARGS__})
+#define debug(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eDebug, data ## _wstr, {__VA_ARGS__})
+#define info(data, ...)  __Logutil::intrisicLog(Logutil::LogLevel::eInfo,  data ## _wstr, {__VA_ARGS__})
+#define warn(data, ...)  __Logutil::intrisicLog(Logutil::LogLevel::eWarn,  data ## _wstr, {__VA_ARGS__})
+#define error(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eError, data ## _wstr, {__VA_ARGS__})
+#define fatal(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eFatal, data ## _wstr, {__VA_ARGS__})
 
 #define RESET   L"\033[0m"
 
 #define BOLD    "\033[1m"
 
 #define RED     L"\033[31m"
-#define GREEN   L"\033[32m"
+#define GREEN   L"\033[0;32m"
 #define YELLOW  L"\033[33m"
 #define BLUE    L"\033[34m"
 #define MAGENTA L"\033[35m"
@@ -78,7 +81,7 @@ namespace Logutil {
     class __Logutil {
         public:
 
-            static void intrisicLog(LogLevel level, fs::path file, int line, std::wstring data, std::initializer_list<LogVariant> args) noexcept;
+            static void intrisicLog(LogLevel level, std::wstring data, std::initializer_list<LogVariant> args, std::source_location location = std::source_location::current()) noexcept;
 
         private:    
             static __Logutil* instance;
