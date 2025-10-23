@@ -1,8 +1,9 @@
 #include <cbuild/cbuild.hpp>
 
-int build() {
+int build(CBuild::Context context) {
     
     CBuild::Shared logutil(
+        context,
         "src/logutil.cpp",
         "logutil"
     );
@@ -11,6 +12,7 @@ int build() {
     logutil.compile();
 
     CBuild::Executable test(
+        context,
         "test/main.cpp",
         "test"
     );
