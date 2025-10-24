@@ -17,13 +17,13 @@ namespace Logutil {
 
     const wchar_t* levelColor(LogLevel level) {
         switch (level) {
-            case LogLevel::eDebug: return MAGENTA;
-            case LogLevel::eInfo:  return CYAN;
-            case LogLevel::eWarn:  return YELLOW;
-            case LogLevel::eError: return RED;
-            case LogLevel::eFatal: return BOLD RED;
+            case LogLevel::eDebug: return LOGUTIL_MAGENTA;
+            case LogLevel::eInfo:  return LOGUTIL_CYAN;
+            case LogLevel::eWarn:  return LOGUTIL_YELLOW;
+            case LogLevel::eError: return LOGUTIL_RED;
+            case LogLevel::eFatal: return LOGUTIL_BOLD LOGUTIL_RED;
         }
-        return WHITE;
+        return LOGUTIL_WHITE;
     }
 
     __Logutil* __Logutil::getInstance() noexcept {
@@ -54,7 +54,7 @@ namespace Logutil {
             else if constexpr (std::is_same_v<T, std::wstring>)
                 ss << value;
             else if constexpr (std::is_same_v<T, bool>)
-                ss << BLUE << (value ? L"true" : L"false") << WHITE;
+                ss << LOGUTIL_BLUE << (value ? L"true" : L"false") << LOGUTIL_WHITE;
             else if constexpr (std::is_same_v<T, void*>)
                 ss << std::hex << value;
             else if constexpr (std::is_same_v<T, double>) {
@@ -135,16 +135,16 @@ namespace Logutil {
         locationStream << location.function_name();
         
         std::wstringstream output;
-        output << GREEN;
+        output << LOGUTIL_GREEN;
         output << getTime();
-        output << RESET << " ";
+        output << LOGUTIL_RESET << " ";
         output << levelColor(level);
         output << std::left << std::setw(8) << L"["+toString(level)+L"]";
-        output << RESET << " ";
-        output << BLUE;
+        output << LOGUTIL_RESET << " ";
+        output << LOGUTIL_BLUE;
         output << std::right << std::setw(maxFileWidth) << truncate(locationStream.str(), maxFileWidth);
-        output << RESET << " ";
-        output << WHITE;
+        output << LOGUTIL_RESET << " ";
+        output << LOGUTIL_WHITE;
         output << simplify(data, args);
 
 

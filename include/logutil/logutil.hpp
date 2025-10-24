@@ -53,17 +53,17 @@ std::wstring operator "" _wstr(const char* str, size_t len) {
 #define error(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eError, data ## _wstr, {__VA_ARGS__})
 #define fatal(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eFatal, data ## _wstr, {__VA_ARGS__})
 
-#define RESET   L"\033[0m"
+#define LOGUTIL_RESET   L"\033[0m"
 
-#define BOLD    "\033[1m"
+#define LOGUTIL_BOLD    "\033[1m"
 
-#define RED     L"\033[31m"
-#define GREEN   L"\033[0;32m"
-#define YELLOW  L"\033[33m"
-#define BLUE    L"\033[34m"
-#define MAGENTA L"\033[35m"
-#define CYAN    L"\033[36m"
-#define WHITE   L"\033[37m"
+#define LOGUTIL_RED     L"\033[31m"
+#define LOGUTIL_GREEN   L"\033[0;32m"
+#define LOGUTIL_YELLOW  L"\033[33m"
+#define LOGUTIL_BLUE    L"\033[34m"
+#define LOGUTIL_MAGENTA L"\033[35m"
+#define LOGUTIL_CYAN    L"\033[36m"
+#define LOGUTIL_WHITE   L"\033[37m"
 
 namespace Logutil {
 
