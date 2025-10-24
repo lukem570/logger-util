@@ -1,0 +1,5 @@
+#define debug(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eDebug, data ## _wstr, {__VA_ARGS__})
+#define info(data, ...)  __Logutil::intrisicLog(Logutil::LogLevel::eInfo,  data ## _wstr, {__VA_ARGS__})
+#define warn(data, ...)  __Logutil::intrisicLog(Logutil::LogLevel::eWarn,  data ## _wstr, {__VA_ARGS__})
+#define error(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eError, data ## _wstr, {__VA_ARGS__})
+#define fatal(data, ...) __Logutil::intrisicLog(Logutil::LogLevel::eFatal, data ## _wstr, {__VA_ARGS__})
